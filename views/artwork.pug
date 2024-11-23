@@ -1,0 +1,18 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport" content="width=device-width, initial-scale=1.0")
+    link(rel="stylesheet", href="/css/styles.css")
+    title= artwork.title
+  body
+    header
+      h1= artwork.title
+      p Artist: #{artwork.artist_title || 'Unknown'}
+      a(href="/") Back to Home
+    main
+      if artwork.image_url
+        img(src=artwork.image_url alt=artwork.title)
+      p Description: #{artwork.description || 'No description available.'}
+      h2 About the Artist
+      p= artistInfo

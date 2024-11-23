@@ -1,0 +1,26 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport" content="width=device-width, initial-scale=1.0")
+    link(rel="stylesheet", href="/css/styles.css")
+    title Art & Culture Explorer
+  body
+    header
+      h1 Art & Culture Explorer
+      form(action="/" method="get")
+        input(type="text" name="q" placeholder="Search artworks..." value=query)
+        button Search
+    main
+      ul
+        each art in artworks
+          li
+            a(href=`/artwork/${art.id}`)
+              if art.thumbnail && art.thumbnail.lqip
+                img(src=art.thumbnail.lqip alt=art.title)
+              else
+                img(src="/path/to/default-image.jpg" alt="Default artwork")
+              h2= art.title
+      if !artworks.length
+        p No artworks found. Try searching for something else.
+    footer &copy; 2024 Art & Culture Explorer
