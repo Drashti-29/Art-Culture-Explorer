@@ -17,7 +17,11 @@ app.get('/', async (req, res) => {
     const apiUrl = `${process.env.ARTIC_API_URL}/artworks/search?q=${query}`;
     const response = await axios.get(apiUrl);
     const artworks = response.data.data;
-    res.render('index', { artworks, query });
+    // Define suggestions and categories
+    const suggestions = ['Impressionism', 'Van Gogh', 'Mona Lisa', 'Renaissance', 'Abstract', 'Cubism'];
+    const categories = ['Paintings', 'Sculptures', 'Drawings', 'Modern Art', 'Classical Art'];
+  
+    res.render('index', { artworks, query, suggestions, categories });
   } catch (error) {
     console.error(error);
     res.render('index', { artworks: [], query: '', error: 'Failed to fetch artworks' });

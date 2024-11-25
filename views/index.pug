@@ -9,18 +9,35 @@ html(lang="en")
     header
       h1 Art & Culture Explorer
       form(action="/" method="get")
-        input(type="text" name="q" placeholder="Search artworks..." value=query)
-        button Search
+        input(type="text" name="q" placeholder="Search artworks by title, artist, or movement..." value=query)
+        button(type="submit") Search
     main
-      ul
-        each art in artworks
-          li
-            a(href=`/artwork/${art.id}`)
-              if art.thumbnail && art.thumbnail.lqip
-                img(src=art.thumbnail.lqip alt=art.title)
-              else
-                img(src="/path/to/default-image.jpg" alt="Default artwork")
-              h2= art.title
-      if !artworks.length
-        p No artworks found. Try searching for something else.
-    footer &copy; 2024 Art & Culture Explorer
+      section.suggestions
+        h2 Need Inspiration?
+        p Try searching for terms like "Impressionism," "Van Gogh," or "Mona Lisa."
+        ul.suggestion-list
+          each suggestion in suggestions
+            li
+              a(href=`/?q=${encodeURIComponent(suggestion)}`)= suggestion
+      section.artwork-list
+        if artworks.length
+          h2 Results for '#{query || 'All Artworks'}'
+          ul
+            each art in artworks
+              li.artwork-item
+                a(href=`/artwork/${art.id}` class="artwork-link")
+                  if art.thumbnail && art.thumbnail.lqip
+                    img(src=art.thumbnail.lqip alt=art.title class="artwork-image")
+                  else
+                    img(src="/images/download.jpeg" alt="Default artwork" class="artwork-image")
+                  h3.artwork-title= art.title
+        else
+          p.message No artworks found. Try searching for something else.
+      section.category-list
+        h2 Explore Categories
+        ul.category-list
+          each category in categories
+            li
+              a(href=`/?q=${encodeURIComponent(category)}` class="category-link")= category
+    footer
+      p &copy; 2024 Art & Culture Explorer
